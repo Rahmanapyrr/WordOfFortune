@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Welcome to Word of Fortune, a fabulous Hangman Game!
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
