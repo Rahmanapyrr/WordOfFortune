@@ -1,28 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
-import Hangman from './components/Hangman';
-import {useSpring, animated} from 'react-spring'
+
+import Homepage from './components/Homepage/Homepage';
+import ErrorRoute from './components/ErrorRoute/ErrorRoute';
+
+// import Hangman from './components/Hangman';
+
+// import {useSpring, animated} from 'react-spring'
+
+// React Router Dom
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
+
 
 function App() {
-  const props = useSpring({opacity: 1, from: {opacity: 0},Duration:200})
   return (
     <div className="App">
-      <Hangman/>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <p style={props}> Welcome to Word of Fortune! Let's Play!
-        <animated.div style={props}>I will fade in</animated.div>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path = '/' component = {Homepage} />
+          <Route component = {ErrorRoute} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
