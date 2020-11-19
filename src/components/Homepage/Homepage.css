@@ -1,0 +1,58 @@
+/* Header Section */
+
+header {
+    text-align: right;
+    padding: 25px;
+}
+
+
+/* **************** */
+
+
+/* Main Section */
+main {
+
+}
+
+main img {
+    float: left;
+    width: 197px;
+    height: 240px;
+    margin-left: 400px;
+}
+
+main h1 {
+    display: flex;
+    text-align: center;
+    font-size: 80px;
+    padding: 50px;
+}
+
+
+/* **************** */
+
+
+/* Nav Section */
+nav {
+    margin: auto;
+    
+}
+
+nav .singleplayer, nav .multiplayer, nav .options {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+nav .multiplayer {
+    margin-bottom: 40px;
+}
+
+/* **************** */
+
+
+/* Footer Section */
+
+
