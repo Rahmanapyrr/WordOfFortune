@@ -10,9 +10,6 @@ header {
 
 
 /* Main Section */
-main {
-
-}
 
 main img {
     float: left;
@@ -28,6 +25,13 @@ main h1 {
     padding: 50px;
 }
 
+/* Removes the image from the screen */
+@media screen and (max-width: 880px) {
+    main img {
+      display: none;
+    }
+}
+
 
 /* **************** */
 
@@ -40,14 +44,15 @@ nav {
 
 nav .singleplayer, nav .multiplayer, nav .options {
     display: block;
+    font-size: 30px;
     margin-left: auto;
     margin-right: auto;
-    padding: 15px;
+    padding: 5px 10px 5px 10px;
     margin-bottom: 30px;
 }
 
 nav .multiplayer {
-    margin-bottom: 40px;
+    margin-bottom: 100px;
 }
 
 /* **************** */
@@ -55,4 +60,14 @@ nav .multiplayer {
 
 /* Footer Section */
 
+footer {
+    height: 40px;
+}
+
+footer img {
+    float: right;
+    margin-right: 25px;
+    height: 50px;
+    width: 50px;
+}
 
