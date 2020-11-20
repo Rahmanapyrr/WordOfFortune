@@ -6,6 +6,14 @@
 import React, { useState } from 'react';
 
 import './Homepage.css';
+
+/** Functions */
+import logIn from '../../firebase/auth/Login.js';
+import logOut from '../../firebase/auth/Logout.js';
+
+
+/** Styling */
+// Images
 import BisonLogo from './assets/bison_logo.png';
 import GitHubLogo from './assets/github_logo.png';
 
@@ -16,18 +24,40 @@ import {useSpring, animated} from 'react-spring'
 import {Button} from '@material-ui/core';
 
 export default function Homepage() {
+    // State
     const [user, setUser] = useState(null); // user is represented as an object in firebase
 
-    const fadeIn = useSpring({opacity: 1, from: {opacity: 0}, Duration:300});
-    const fromAbove = useSpring({marginTop: 0, from: {marginTop: -1000}, Duration: 2000})
+    // Animations
+    const fadeIn = useSpring({opacity: 1, from: {opacity: 0}, Duration: 2000});
+    const fromAbove = useSpring({marginTop: 0, from: {marginTop: -1000}, Duration: 1000})
+
+    // Log user in
+    const logInUser = async() => {
+        const userObject = await logIn();
+        setUser(userObject);
+    }
+
+    // Log user out
+    const logOutUser = async() => {
+        logOut();
+        setUser(null);
+    }
+
     return (
         <div>
             <animated.div style={fadeIn}>
                 <header>
-                    {(user) ? <h2>Hello user</h2>
+                    {(user) ? 
+                        <div>
+                            <img src={user.photoURL}></img>
+                            <h2>{user.displayName}</h2>
+                            <Button onClick={logOutUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
+                                    Log Out
+                            </Button>
+                        </div>
                         :
                         <div>
-                            <Button style={{color: "#5647FD"}} variant="outlined" color="primary">
+                            <Button onClick={logInUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
                                 Log In
                             </Button>
                         </div>
@@ -49,10 +79,12 @@ export default function Homepage() {
 
             </nav>
 
-            <footer>
-                <a href="https://github.com/Rahmanapyrr/WordOfFortune"><img src={GitHubLogo}></img></a>
+            <animated.div style={fadeIn}>
+                <footer>
+                    <a href="https://github.com/Rahmanapyrr/WordOfFortune"><img src={GitHubLogo} alt="GitHub Logo"></img></a>
 
-            </footer>
+                </footer>
+            </animated.div>
 
 
 
