@@ -5,6 +5,17 @@ header {
     padding: 25px;
 }
 
+header img {
+    display: inline;
+    border-radius: 25%;
+    width: 60px;
+    height: 60px;
+}
+
+header h2 {
+    display: inline-block;
+}
+
 
 /* **************** */
 
@@ -26,7 +37,7 @@ main h1 {
 }
 
 /* Removes the image from the screen */
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 900px) {
     main img {
       display: none;
     }
