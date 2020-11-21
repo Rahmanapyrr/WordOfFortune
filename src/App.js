@@ -1,3 +1,5 @@
+/** Holds all route information */
+
 import './App.css';
 
 import Homepage from './components/Homepage/Homepage';
@@ -5,10 +7,9 @@ import ErrorRoute from './components/ErrorRoute/ErrorRoute';
 
 // import Hangman from './components/Hangman';
 
-// import {useSpring, animated} from 'react-spring'
-
 // React Router Dom
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import SinglePlayer from './components/SinglePlayer/SinglePlayer';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path = '/' component = {Homepage} />
+          <Route exact path = '/singleplayer' component = {SinglePlayer} />
           <Route component = {ErrorRoute} />
         </Switch>
       </BrowserRouter>
