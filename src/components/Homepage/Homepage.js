@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import logIn from '../../firebase/auth/Login.js';
 import logOut from '../../firebase/auth/Logout.js';
 import { auth } from '../../firebase/firebase'
-
+import { addUserToDB } from '../../firebase/firestore/firestore.js';
 
 /** Styling */
 import './Homepage.css';
@@ -49,6 +49,7 @@ export default function Homepage() {
     auth.onAuthStateChanged(function(user) {
         if (user) {
             // User signed in.
+            addUserToDB(user);
             setUser(user);
         } else {
             // No user is signed in.
@@ -63,7 +64,7 @@ export default function Homepage() {
                     {(user) ? 
                         <div>
                             <img src={user.photoURL} alt="User profile"></img>
-                            <h4>{user.displayName}</h4>
+                            <a className="profile" href={`/profile/${user.uid}`}><h4>{user.displayName}</h4></a>
                             <Button onClick={logOutUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
                                     Log Out
                             </Button>

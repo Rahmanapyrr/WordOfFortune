@@ -1,7 +1,0 @@
-/** Settings for the singleplayer game */
-
-const EASY_DIFFICULTY = "EASY";
-const MEDIUM_DIFFICULTY = "MEDIUM";
-const HARD_DIFFICULTY = "HARD";
-
-export {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, HARD_DIFFICULTY};

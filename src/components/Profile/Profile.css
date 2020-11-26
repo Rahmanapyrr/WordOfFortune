@@ -1,0 +1,47 @@
+/* Google Profile */
+.google-profile {
+    text-align: left;
+}
+
+.google-profile h3 {
+    font-weight: normal;
+}
+
+.google-profile figure {
+    margin: 20px;
+    float: left;
+
+    width: 140px;
+    height: 140px;
+}
+
+.google-profile img {
+    border-radius: 50%;
+}
+
+.google-profile figcaption {
+    cursor: pointer;
+}
+/* ******************* */
+
+/* Achievements */
+.achievements {
+    clear: both;
+}
+
+.achievements h1 {
+    font-size: 120px;
+    font-weight: normal;
+    color: rgb(236, 236, 236);
+    z-index: -1;
+    margin: 10px;
+    opacity: 0.7;
+}
+
+.achievements .list {
+    text-align: left;
+    font-weight: bold;
+    position: relative;
+    bottom: 100px;
+    margin: 15px;
+}
