@@ -49,7 +49,7 @@ export default function Homepage() {
                 <header>
                     {(user) ? 
                         <div>
-                            <img src={user.photoURL}></img>
+                            <img src={user.photoURL} alt="description in case"></img>
                             <h2>{user.displayName}</h2>
                             <Button onClick={logOutUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
                                     Log Out
