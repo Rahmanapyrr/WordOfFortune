@@ -2,17 +2,20 @@
 
 // State: user ; represented by object.
 // Functionality: Ability to log the user in and log the user out.
+// Also, creates an observer that watches for when the state changes.
 
 import React, { useState } from 'react';
-
-import './Homepage.css';
+import { Link } from 'react-router-dom'
 
 /** Functions */
 import logIn from '../../firebase/auth/Login.js';
 import logOut from '../../firebase/auth/Logout.js';
-
+import { auth } from '../../firebase/firebase'
+import { addUserToDB } from '../../firebase/firestore/firestore.js';
 
 /** Styling */
+import './Homepage.css';
+
 // Images
 import BisonLogo from './assets/bison_logo.png';
 import GitHubLogo from './assets/github_logo.png';
@@ -28,20 +31,31 @@ export default function Homepage() {
     const [user, setUser] = useState(null); // user is represented as an object in firebase
 
     // Animations
-    const fadeIn = useSpring({opacity: 1, from: {opacity: 0}, Duration: 2000});
-    const fromAbove = useSpring({marginTop: 0, from: {marginTop: -1000}, Duration: 1000})
+    const fadeIn = useSpring({opacity: 1, from: {opacity: 0}, Duration: 1000});
+    const fromAbove = useSpring({marginTop: 0, from: {marginTop: -1000}, Duration: 700});
 
     // Log user in
     const logInUser = async() => {
-        const userObject = await logIn();
-        setUser(userObject);
+        await logIn();
     }
 
     // Log user out
     const logOutUser = async() => {
         logOut();
-        setUser(null);
     }
+
+    // Sets an observer on the Auth object to watch and update state 
+    // whenever the user is signed in or signed out.
+    auth.onAuthStateChanged(function(user) {
+        if (user) {
+            // User signed in.
+            addUserToDB(user);
+            setUser(user);
+        } else {
+            // No user is signed in.
+            setUser(null);
+        }
+    });
 
     return (
         <div>
@@ -49,8 +63,8 @@ export default function Homepage() {
                 <header>
                     {(user) ? 
                         <div>
-                            <img src={user.photoURL}></img>
-                            <h2>{user.displayName}</h2>
+                            <img src={user.photoURL} alt="User profile"></img>
+                            <a className="profile" href={`/profile/${user.uid}`}><h4>{user.displayName}</h4></a>
                             <Button onClick={logOutUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
                                     Log Out
                             </Button>
@@ -73,7 +87,7 @@ export default function Homepage() {
             </animated.div>
 
             <nav>
-                <Button className="singleplayer"  variant="contained" color="primary">Singleplayer</Button>
+                <Button component={Link} to={"/singleplayer"} className="singleplayer"  variant="contained" color="primary">Singleplayer</Button>
                 <Button className="multiplayer" variant="contained" color="primary">Multiplayer</Button>
                 <Button className="options"  variant="contained" color="primary">Options</Button>
 
@@ -85,25 +99,6 @@ export default function Homepage() {
 
                 </footer>
             </animated.div>
-
-
-
-            {/* <Hangman/>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <p style={props}> Welcome to Word of Fortune! Let's Play!
-        <animated.div style={props}>I will fade in</animated.div>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
         </div>
     )
 }

@@ -2,19 +2,32 @@
 
 header {
     text-align: right;
-    padding: 25px;
+    padding: 10px;
 }
 
 header img {
-    display: inline;
-    border-radius: 25%;
-    width: 60px;
-    height: 60px;
+    display: inline-block;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
 }
 
-header h2 {
+header h4 {
     display: inline-block;
+    margin-left: 15px;
+    margin-right: 25px;
 }
+
+header h4:hover {
+    border-bottom: 3px solid purple;
+    cursor: pointer;
+}
+
+header .profile:visited {
+    color: black;
+}
+
 
 
 /* **************** */
@@ -37,6 +50,12 @@ main h1 {
 }
 
 /* Removes the image from the screen */
+@media screen and (max-width: 1400px) {
+    main img {
+      margin-left: 250px;
+    }
+}
+
 @media screen and (max-width: 900px) {
     main img {
       display: none;
@@ -49,8 +68,7 @@ main h1 {
 
 /* Nav Section */
 nav {
-    margin: auto;
-    
+    /* margin: auto; */
 }
 
 nav .singleplayer, nav .multiplayer, nav .options {
@@ -60,6 +78,7 @@ nav .singleplayer, nav .multiplayer, nav .options {
     margin-right: auto;
     padding: 5px 10px 5px 10px;
     margin-bottom: 30px;
+    width: 9em;
 }
 
 nav .multiplayer {
@@ -72,13 +91,13 @@ nav .multiplayer {
 /* Footer Section */
 
 footer {
-    height: 40px;
+    height: 30px;
 }
 
 footer img {
     float: right;
     margin-right: 25px;
-    height: 50px;
-    width: 50px;
+    height: 35px;
+    width: 35px;
 }
 
