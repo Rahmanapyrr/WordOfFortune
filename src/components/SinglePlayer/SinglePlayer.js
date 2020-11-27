@@ -57,6 +57,11 @@ export default function SinglePlayer() {
   // The body of the Modal
   const modalBody = (
     <div className="modal">
+      <a href='/'>
+          <span style={{color: "black"}}>
+              <i class="fas fa-arrow-left"></i>
+          </span>
+      </a>
       <h2>Ready to get started?</h2>
       <FormControl className="form">
         <InputLabel id="difficulty">Difficulty</InputLabel>
@@ -86,10 +91,7 @@ export default function SinglePlayer() {
   );
 
   return (
-    <div>
-      <h1>Singleplayer!</h1>
-      
-      
+    <div>     
       <Modal open={open} onClose={handleClose} disableBackdropClick >
         {modalBody}
       </Modal>

@@ -18,12 +18,15 @@ import { queryDocumentDB } from '../../../firebase/firestore/firestore.js';
 // Components
 import DisplayWord from './DisplayWord.js';
 import Characters from './Characters.js';
+import SPSummaryModal from './SPSummaryModal.js';
 
-import {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, INVALID_CHARACTERS} from './SPSettings.js';
+import {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, INVALID_CHARACTERS, HINTS} from './SPSettings.js';
 
 // Styling
 import GoBackLogo from './assets/goBackIcon.png';
-import {Grid} from '@material-ui/core';
+import BisonLogo from '../../../components/Homepage/assets/bison_logo.png';
+import './SPGame.css';
+import {Grid, TextField} from '@material-ui/core';
 
 
 // imported from NPM random words
@@ -36,16 +39,23 @@ export default function SPGame(props) {
     const [currentLives, setCurrentLives] = useState(6); // lives
     const [currentWord, setCurrentWord] = useState([]); // the current word is stored as array
     const [charactersToDisplay, setCharactersToDisplay] = useState([]); // 0/1 array if this char should be displayed or not
+
     const [charactersChosen, setCharactersChosen] = useState([]); // list of character of chosen
-    const [hints, setHints] = useState([]); // hints
+
+    const [userGuess, setUserGuess] = useState("");
+    const [currentHint, setCurrentHint] = useState(""); // current hint that should be displayed
     const [theme, setTheme] = useState("") // theme
 
+    const [summaryModal, openSummaryModal] = useState(false); // summary modal
+
+    // When component loads calls handleUserGuess
     useEffect(() => {
         // Simply sets current word in state
         getChallengeWordBasedOnDifficulty();
+
     }, []);
 
-    // All this simply does is get a word to guess based on difficulty.
+    // All this simply does is set the game state based on the word.
     const getChallengeWordBasedOnDifficulty = async() => {
         var words;
         var currentHangmanWord;
@@ -59,8 +69,13 @@ export default function SPGame(props) {
                 words = randomWords({exactly: 5, maxLength: 25});
             }
 
+            // returns random word from a 5 word array
             currentHangmanWord = words[Math.floor(Math.random() * 5)];  // returns a random integer from 0 to 4
+
+            // split is used to convert into array
             setCurrentWord(currentHangmanWord.split(""));
+            setTheme("A Random Word");
+            setCurrentHint(HINTS[Math.floor(Math.random() * HINTS.length)]);
 
         } else {
             // Else query firebase database and get the WHOLE document
@@ -80,7 +95,7 @@ export default function SPGame(props) {
                 setCurrentWord(currentHangmanWord.split(""));
             }
 
-            setHints(challengeDataFromDB.hints);
+            setCurrentHint(challengeDataFromDB.hints[Math.floor(Math.random() * challengeDataFromDB.hints.length)]);
             setTheme(challengeDataFromDB.title);
         }
 
@@ -115,64 +130,111 @@ export default function SPGame(props) {
                     modifyCharacterToDisplay[i] = 1;
                 }
             }
-            setCharactersToDisplay(modifyCharacterToDisplay);
             // check if word spelled
+            var wordSpelled = true;
+            for (var i = 0; i < modifyCharacterToDisplay.length; i++) {
+                if (modifyCharacterToDisplay[i] === 0) {
+                    wordSpelled = false;
+                }
+            }
+            if (wordSpelled) openSummaryModal(true);
+
+            setCharactersToDisplay(modifyCharacterToDisplay);
+            
 
         } else {
             // This char is NOT included in the word.
             console.log("I'm sorry, this character is wrong"); 
 
             // Decrease Lives.
-            if (currentLives - 1 === 0) {
+
+            // Check if out of lives
+            if (currentLives - 1 <= 0) {
                 console.log("Out of lives!");
+                setCurrentLives(0);
+                // open summary modal
+                openSummaryModal(true);
 
             } else setCurrentLives(currentLives - 1);
             
-             // check if out of lives
         }
      
     }
+
+    // Handles if a user guessed.
+    const handleUserGuess = (event) => {
+        // Enter was pressed
+        if (event.key === "Enter") {
+            if (currentWord.join('').toUpperCase() === userGuess.toUpperCase()) {
+                // Guess was correct
+                console.log("GUESS WAS CORRECT!");
+                openSummaryModal(true);
+            } else {
+                // Guess was incorrect.
+                if (currentLives - 2 <= 0) {
+                    console.log("Out of lives!");
+                    setCurrentLives(0);
+                    // open summary modal
+                    openSummaryModal(true);
+                } else setCurrentLives(currentLives - 2);
+
+                console.log("Wrong guess..");
+            }
+        }       
+    }
+
+    
+
+    
     console.log(currentWord);
     console.log(charactersToDisplay);
+    
 
     return (
+        
         <div>
             <header>
-                {/* <a href='/singleplayer'><img src={GoBackLogo} alt="Go back."></img></a> */}
+                <a href='/singleplayer'>
+                    <span className="back-arrow">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                </a>
+                <img src={BisonLogo} alt="Bison Logo"></img>
 
             </header>
-
             <div>
-                {"Theme: " + theme}
+                <h1>{"Theme: " + theme}</h1>
             </div>
 
 
-            <main>
+            <section>
                 {/* Hangman */}
-                <Grid container spacing={1}>
-                    <Grid item xs>
-                        This is the Grid item in SPGame Component...
+                <Grid container spacing={2}>
+                    <Grid className="lives" item xs>
+                        <h3>{`Lives: `} {[...Array(currentLives)].map((e, i) => <i key={i} class="fas fa-heart heart"></i>)}</h3>
                     </Grid>
-                    <Grid item>
-                        <Characters charactersChosen={charactersChosen} handleCharacterClick={handleCharacterClick}/>
+                    <Grid item xs>
+                        <Characters className="characters" charactersChosen={charactersChosen} handleCharacterClick={handleCharacterClick}/>
                     </Grid>
                     
                 </Grid>
 
-            </main>
+            </section>
 
             <section>  
-                <DisplayWord currentWord={currentWord} charactersToDisplay={charactersToDisplay}/>
-                {/* Know word? Guess it! */}
-
+                <Grid container>
+                    <Grid item xs>
+                        <DisplayWord currentWord={currentWord} charactersToDisplay={charactersToDisplay}/>
+                        <TextField value={userGuess} onChange={(e) => setUserGuess(e.target.value)} onKeyUp={(e) => handleUserGuess(e)} color="primary" label="Guess word!" variant="filled"/>
+                    </Grid>
+                    <Grid item xs>
+                        <h3>{"Hint: " + currentHint}</h3>
+                    </Grid>
+                </Grid>
             </section>
-           
+
+            {summaryModal ? <SPSummaryModal/> : <> </>}     
         
         </div>
     )
 }
-
-// display hangman state
-// display current word
-// letters guessed
-// words guessed

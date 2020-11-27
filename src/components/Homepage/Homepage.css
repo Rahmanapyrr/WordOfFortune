@@ -20,10 +20,8 @@ header h4 {
 }
 
 header h4:hover {
-    /* (TODO:Payton) Add hover to name that appears */
     border-bottom: 3px solid purple;
     cursor: pointer;
-
 }
 
 header .profile:visited {

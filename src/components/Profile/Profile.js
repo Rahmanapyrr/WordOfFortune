@@ -44,10 +44,16 @@ export default function Profile(props) {
         
     }, []);
 
+    const formatStatisticLabel = (str) => {
+        const result = str.replace( /([A-Z])/g, " $1" );
+        return result.charAt(0).toUpperCase() + result.slice(1);
+    }
+
+    console.log(userProfileInDB);
     console.log(userProfileInGoogle);
     return (
         <div>
-            {userProfileInGoogle ? 
+            {userProfileInGoogle && userProfileInDB ? 
             <div>
                 <header>
                 {/* Back icon */}
@@ -71,10 +77,20 @@ export default function Profile(props) {
                 </section>
 
                 <section className="statistics">
+                    <h1>STATISTICS</h1>
+                    <ul className="list">
+                        {Object.keys(userProfileInDB.statistics).map((key, index) => {
+                            return <li key={index} className="item">{formatStatisticLabel(key) + ":  " + userProfileInDB.statistics[key]}</li>
+                        })}
+                    </ul>
                     {/* Statistics  */}
                 </section>
 
-                <section className="power-ups">
+                <section className="skills">
+                    <h1>SKILLS</h1>
+                    {
+                        userProfileInDB.skills ? <div></div> : <div className="list">Oh no! You don't have any skills. Get some here!</div>
+                    }
                     {/* Power ups */}
                 </section>
             </div>

@@ -21,7 +21,7 @@ export default function Characters({ charactersChosen, handleCharacterClick }) {
             if (charactersChosen.includes(char)) {
                 return (
 
-                    <div style={disabledCharacter} key={index}>
+                    <div className="disabledCharacter" key={index}>
                         {char}
                     </div>
                 ) 
@@ -29,7 +29,7 @@ export default function Characters({ charactersChosen, handleCharacterClick }) {
 
                 // Active version. The user can choose this character.
                 return (
-                    <div onClick={(event) => handleCharacterClick(event.target.innerHTML)} style={activeCharacter} key={index}>
+                    <div className="activeCharacter" onClick={(event) => handleCharacterClick(event.target.innerHTML)} key={index}>
                         {char}
                     </div>
                 ) 
@@ -46,21 +46,3 @@ export default function Characters({ charactersChosen, handleCharacterClick }) {
     )
 }
 
-const activeCharacter = {
-    border: "2px solid blue",
-    display: "inline-flex",
-    backgroundColor: "##f7f5f5",
-    borderRadius: "4px",
-    padding: "10px",
-    margin: "20px",
-    fontWeight: "bold",
-    cursor: "pointer",
-};
-
-const disabledCharacter = {
-    display: "inline-flex",
-    backgroundColor: "#706f6f",
-    borderRadius: "4px",
-    padding: "10px",
-    margin: "20px",
-};

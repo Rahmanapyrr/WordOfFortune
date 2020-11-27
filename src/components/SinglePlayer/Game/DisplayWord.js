@@ -48,5 +48,5 @@ export default function DisplayWord({ charactersToDisplay, currentWord }) {
 }
 
 const style = {
-    fontSize: "35px",
+    fontSize: "5em",
 };

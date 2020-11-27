@@ -15,6 +15,6 @@ const INVALID_AMPERSAND = "&";
 const INVALID_CHARACTERS = [INVALID_SPACE, INVALID_DASH, INVALID_AMPERSAND];
 
 // Default hints
-const HINTS = ["Think about everyday words...", "We didn't select words that appear on dissertations..."];
+const HINTS = ["Think about everyday words...", "We didn't select words that appear on dissertations...", "Nouns, verbs, adverbs, adjectives, and more are fair game!"];
 
-export {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, HARD_DIFFICULTY, ALLOWED_CHARACTERS, INVALID_SPACE, INVALID_DASH, INVALID_CHARACTERS, INVALID_AMPERSAND};
+export {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, HARD_DIFFICULTY, ALLOWED_CHARACTERS, INVALID_SPACE, INVALID_DASH, INVALID_CHARACTERS, INVALID_AMPERSAND, HINTS};
