@@ -193,7 +193,7 @@ export default function SPGame(props) {
     return (
         
         <div>
-            <header>
+            <header class="game">
                 <a href='/singleplayer'>
                     <span className="back-arrow">
                         <i class="fas fa-arrow-left"></i>
