@@ -9,7 +9,6 @@ async function logIn() {
     try {
         const result = await auth.signInWithPopup(provider);
         const user = result.user;
-        console.log(user);
         return user;
     } catch (error) {
         console.log(error.message);

@@ -1,0 +1,29 @@
+/* Modal control */
+
+.modal {
+    position: absolute;
+    width: 300;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Form in modal */
+
+.form {
+    margin: 15px;
+    min-width: 120px;
+}
+
+#difficulty-label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.difficulty-button {
+    padding: 10px;
+    margin: 30px;
+    display: block;
+}

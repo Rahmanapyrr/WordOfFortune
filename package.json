@@ -3,13 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@emotion/core": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "@material-ui/core": "^5.0.0-alpha.17",
+=======
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+>>>>>>> 37f4f4d7e29beb3de8b6c45342458d7ef1805f02
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "firebase": "^8.1.0",
+    "random-words": "^1.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
