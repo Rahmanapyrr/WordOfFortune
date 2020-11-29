@@ -5,6 +5,7 @@ import './App.css';
 import Homepage from './components/Homepage/Homepage';
 import ErrorRoute from './components/ErrorRoute/ErrorRoute';
 import Profile from './components/Profile/Profile';
+import Custom from './components/Custom/Custom';
 
 // import Hangman from './components/Hangman';
 
@@ -21,6 +22,7 @@ function App() {
           <Route exact path = '/' component = {Homepage} />
           <Route exact path = '/profile/:uid' component = {Profile} />
           <Route exact path = '/singleplayer' component = {SinglePlayer} />
+          <Route exact path = '/custom' component = {Custom} />
           <Route component = {ErrorRoute} />
         </Switch>
       </BrowserRouter>

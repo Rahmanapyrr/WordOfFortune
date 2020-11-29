@@ -42,6 +42,7 @@ export default function Homepage() {
     // Log user out
     const logOutUser = async() => {
         logOut();
+        setUser(null);
     }
 
     // Sets an observer on the Auth object to watch and update state 
@@ -63,8 +64,6 @@ export default function Homepage() {
                 <header>
                     {(user) ? 
                         <div>
-                            <img src={user.photoURL} alt="description in case"></img>
-                            <h2>{user.displayName}</h2>
                             <img src={user.photoURL} alt="User profile"></img>
                             <a className="profile" href={`/profile/${user.uid}`}><h4>{user.displayName}</h4></a>
                             <Button onClick={logOutUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
@@ -91,6 +90,7 @@ export default function Homepage() {
             <nav>
                 <Button component={Link} to={"/singleplayer"} className="singleplayer"  variant="contained" color="primary">Singleplayer</Button>
                 <Button className="multiplayer" variant="contained" color="primary">Multiplayer</Button>
+                {(user) ? <Button component={Link} to={"/custom"} className="custom" variant="contained" color="primary">Custom</Button> : <></>}
                 <Button className="options"  variant="contained" color="primary">Options</Button>
 
             </nav>

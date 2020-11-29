@@ -71,7 +71,7 @@ nav {
     /* margin: auto; */
 }
 
-nav .singleplayer, nav .multiplayer, nav .options {
+nav .singleplayer, nav .multiplayer, nav .options, nav .custom {
     display: block;
     font-size: 30px;
     margin-left: auto;
@@ -81,7 +81,7 @@ nav .singleplayer, nav .multiplayer, nav .options {
     width: 9em;
 }
 
-nav .multiplayer {
+nav .custom {
     margin-bottom: 100px;
 }
 

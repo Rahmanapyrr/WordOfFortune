@@ -62,8 +62,6 @@ export default function Profile(props) {
         }
     }
 
-    console.log(userProfileInDB);
-    console.log(userProfileInGoogle);
     return (
         <div>
             {userProfileInGoogle && userProfileInDB ? 

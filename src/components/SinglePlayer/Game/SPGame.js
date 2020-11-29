@@ -36,7 +36,7 @@ const randomWords = require('random-words');
 
 export default function SPGame(props) {
     // Grab difficulty and challenge
-    const { difficulty, challenge } = props;
+    const { difficulty, challenge, userChallenge } = props;
 
     const [currentLives, setCurrentLives] = useState(6); // lives
     const [currentWord, setCurrentWord] = useState([]); // the current word is stored as array
@@ -87,10 +87,28 @@ export default function SPGame(props) {
             setTheme("A Random Word");
             setCurrentHint(HINTS[Math.floor(Math.random() * HINTS.length)]);
 
-        } else {
+        } else if (!userChallenge) {
             // Else query firebase database and get the WHOLE document
             const challengeDataFromDB = await queryDocumentDB(challenge.id, "challenges");
 
+            if (difficulty === EASY_DIFFICULTY) {
+                words = challengeDataFromDB.easy;
+                currentHangmanWord = words[Math.floor(Math.random() * words.length)];
+                setCurrentWord(currentHangmanWord.split(""));
+            } else if (difficulty === MEDIUM_DIFFICULTY) {
+                words = challengeDataFromDB.medium;
+                currentHangmanWord = words[Math.floor(Math.random() * words.length)];
+                setCurrentWord(currentHangmanWord.split(""));
+            } else {
+                words = challengeDataFromDB.hard;
+                currentHangmanWord = words[Math.floor(Math.random() * words.length)];
+                setCurrentWord(currentHangmanWord.split(""));
+            }
+
+            setCurrentHint(challengeDataFromDB.hints[Math.floor(Math.random() * challengeDataFromDB.hints.length)]);
+            setTheme(challengeDataFromDB.title);
+        } else {
+            const challengeDataFromDB = challenge;
             if (difficulty === EASY_DIFFICULTY) {
                 words = challengeDataFromDB.easy;
                 currentHangmanWord = words[Math.floor(Math.random() * words.length)];
