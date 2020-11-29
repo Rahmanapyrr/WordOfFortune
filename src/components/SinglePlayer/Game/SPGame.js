@@ -12,6 +12,12 @@
 // Functionality: Primary responsibility is to play a singleplayer game of Hangman
 import React, { useState, useEffect } from 'react'
 
+import image0 from '../../../components/ShipImages/0.png';
+import image1 from '../../../components/ShipImages/1.png';
+import image2 from '../../../components/ShipImages/2.png';
+import image3 from '../../../components/ShipImages/3.png';
+import image4 from '../../../components/ShipImages/4.png';
+
 // Firestore
 import { queryDocumentDB } from '../../../firebase/firestore/firestore.js';
 
@@ -57,6 +63,9 @@ export default function SPGame(props) {
 
     // skills
     const [SKILL_removeCharacterActive, SKILL_setRemoveCharacterState] = useState(true) //
+    // number of words the user has gotton correct consecutively
+    var consecutive_correct = 0
+
 
     // When component loads calls handleUserGuess
     useEffect(() => {
@@ -207,6 +216,9 @@ export default function SPGame(props) {
 
                 showAllCharacters();
                 setRoundWon(true);
+                console.log("GUESS WAS CORRECT!");
+                consecutive_correct = consecutive_correct + 1;
+
                 openSummaryModal(true);
             } else {
                 // Guess was incorrect.
@@ -214,6 +226,8 @@ export default function SPGame(props) {
                     showAllCharacters();
                     setCurrentLives(0);
                     setRoundWon(false);
+
+                    consecutive_correct = 0;
                     // open summary modal
                     openSummaryModal(true);
                 } else setCurrentLives(currentLives - 2);
