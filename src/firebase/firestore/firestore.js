@@ -36,32 +36,49 @@ async function queryDocumentDB(documentID, collectionName) {
     }
 }
 
-// Adds a user to Firebase Firestore
+// Creates a user to Firebase Firestore
 // GIVEN: A data and a collection name from Firestore API
 // RETURNS: Success or Failure.
 async function addUserToDB(userData) {
     const userDocumentRef = firestore.collection("users").doc(userData.uid);
 
-    try {
+    const user = await userDocumentRef.get();
+
+    if (user.exists) {
+        // Simply update logged in value.
+
         const setWithMerge = userDocumentRef.set({
-            rank: 0,
-            statistics: {
-                roundsWon: 0,
-                roundsLost: 0,
-                charactersGuessed: 0,
-                charactersWrong: 0,
-            },
-            achievements: [],
-            skills: [], // power ups or skills
             lastLoggedIn: new Date(),
         }, { merge: true });
-        
-        return true;
 
-    } catch(e) {
-        console.log(e);
-        return false;
+    } else {
+        // Create new account to store to firebase
+
+        try {
+            const setWithMerge = userDocumentRef.set({
+                lastLoggedIn: new Date(),
+                achievements: [],
+                skills: [], // array of objects
+                created_challenges: [],
+                rank: 0,
+                statistics: {
+                    charactersGuessed: 0,
+                    charactersWrong: 0,
+                    roundsWon: 0,
+                    roundsLost: 0,
+                },
+            }, { merge: true });
+            
+            return true;
+
+        } catch(e) {
+            console.log(e);
+            return false;
+        }
     }
+
+    // Should never be reached.
+    return false;
 }
 
 export { queryCollectionDB, queryDocumentDB, addUserToDB };

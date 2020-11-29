@@ -56,10 +56,10 @@ export default function SinglePlayer() {
 
   // The body of the Modal
   const modalBody = (
-    <div className="modal">
+    <div className="sp-modal">
       <a href='/'>
           <span style={{color: "black"}}>
-              <i class="fas fa-arrow-left"></i>
+              <i className="fas fa-arrow-left"></i>
           </span>
       </a>
       <h2>Ready to get started?</h2>
@@ -92,10 +92,12 @@ export default function SinglePlayer() {
 
   return (
     <div>     
+      
       <Modal open={open} onClose={handleClose} disableBackdropClick >
         {modalBody}
       </Modal>
       { (!open) ? <SPGame difficulty={difficulty} challenge={challengeSelected}/> : <> </>}
+      
 
 
     </div>

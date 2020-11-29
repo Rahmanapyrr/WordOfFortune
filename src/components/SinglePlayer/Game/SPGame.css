@@ -18,9 +18,20 @@
 
 /* ************************* */
 
+/* Header  */
+.sp-game-header {
+  color: rgb(34, 115, 255);
+}
+
+
+/* ************************* */
+
 /* Lives / Hangman  */
 section .lives {
-    font-size: 3em;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 3em;       /* The same as your div height */
+  font-size: 3em;
 }
 
 /* Add  */
@@ -55,11 +66,31 @@ section .lives {
 /* ************************* */
 /* Possible characters to choose from */
 .disabledCharacter {
-    display: inline-flex;
-    background-color: #706f6f;
-    border-radius: 4px;
-    padding: 10px;
-    margin: 20px;
+  display: inline-flex;
+  background-color: #706f6f;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 20px;
+}
+
+.disabledCharacter:hover {
+  animation: rotation 0.5s ease-in-out;
+}
+
+/* Rotate animation */
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .activeCharacter {
@@ -77,4 +108,39 @@ section .lives {
 
 .activeCharacter:hover {
     transform: scale(1.3); 
+}
+
+/* ************************* */
+
+/* Character Included/Excluded? */
+.char-included, .char-excluded {
+  margin-bottom: 1px;
+}
+
+.char-included {
+  color: green;
+}
+
+.char-excluded {
+  color: red;
+}
+
+
+
+/* ************************* */
+
+/* Hints */
+.hint {
+  font-style: italic;
+}
+
+/* ************************* */
+
+/* Skills */
+
+.sp-game-skills {
+  float: right;
+  margin: 10px;
+  color: black;
+  cursor: pointer;
 }
