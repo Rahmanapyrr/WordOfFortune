@@ -21,7 +21,7 @@ export default function Characters({ charactersChosen, handleCharacterClick }) {
             if (charactersChosen.includes(char)) {
                 return (
 
-                    <div className="disabledCharacter" key={index}>
+                    <div className="disabledCharacter rotate" key={index}>
                         {char}
                     </div>
                 ) 

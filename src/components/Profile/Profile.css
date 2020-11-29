@@ -1,3 +1,16 @@
+/* Header */
+
+.profile-page-header {
+    height: 20px;
+    border-bottom: 1px solid rgb(206, 206, 206);
+}
+
+.profile-page-header .header-back-arrow {
+    float: left;
+}
+
+/* ******************* */
+
 /* Google Profile */
 .google-profile {
     text-align: left;
@@ -44,6 +57,7 @@
     position: relative;
     bottom: 100px;
     margin: 15px;
+    font-size: 1.5em;
 }
 
 /* ******************* */
@@ -66,10 +80,11 @@
     bottom: 100px;
     margin: 10px;
     list-style-type: none;
+    font-size: 1.5em;
 }
 
 .statistics .list .item {
-    margin-right: 10px;
+    margin-right: 70px;
     display: inline;
 }
 
@@ -97,4 +112,5 @@
     bottom: 100px;
     margin: 10px;
     list-style-type: none;
+    font-size: 1.5em;
 }

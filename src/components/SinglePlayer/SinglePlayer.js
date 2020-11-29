@@ -16,6 +16,9 @@ import './SinglePlayer.css'
 import { Modal, FormControl, Select, MenuItem, InputLabel, Button, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+// React-Spring for animation
+import {useSpring, animated} from 'react-spring'
+
 export default function SinglePlayer() {
   // Default state of modal will be OPEN!
   const [open, setOpen] = useState(true);
@@ -28,6 +31,9 @@ export default function SinglePlayer() {
   
   // Selected challenge
   const [challengeSelected, challengeToSelect] = useState({id: "RANDOM", name: "Random Words"});
+
+  // Animations
+  const fadeIn = useSpring({opacity: 1, from: {opacity: 0}, Duration: 3000});
 
   // Get the challenges from Firestore and adds them to our state.
   useEffect(() => {
@@ -59,7 +65,7 @@ export default function SinglePlayer() {
     <div className="modal">
       <a href='/'>
           <span style={{color: "black"}}>
-              <i class="fas fa-arrow-left"></i>
+              <i className="fas fa-arrow-left"></i>
           </span>
       </a>
       <h2>Ready to get started?</h2>
@@ -92,10 +98,12 @@ export default function SinglePlayer() {
 
   return (
     <div>     
+      <animated.div style={fadeIn}>
       <Modal open={open} onClose={handleClose} disableBackdropClick >
         {modalBody}
       </Modal>
       { (!open) ? <SPGame difficulty={difficulty} challenge={challengeSelected}/> : <> </>}
+      </animated.div>
 
 
     </div>

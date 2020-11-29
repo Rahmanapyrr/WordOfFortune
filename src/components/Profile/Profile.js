@@ -49,14 +49,31 @@ export default function Profile(props) {
         return result.charAt(0).toUpperCase() + result.slice(1);
     }
 
+    // Display the skills on the profile page.
+    const displaySkills = () => {
+        if (userProfileInDB.skills.length > 0) {
+            const skills = userProfileInDB.skills;
+            skills.map((skill, index) => {
+                return <li key={index} className="item">Hey</li>
+            });
+
+        } else {
+            return <div className="list">Oh no! You don't have any skills. Get some here!</div>;
+        }
+    }
+
     console.log(userProfileInDB);
     console.log(userProfileInGoogle);
     return (
         <div>
             {userProfileInGoogle && userProfileInDB ? 
             <div>
-                <header>
-                {/* Back icon */}
+                <header className="profile-page-header">
+                    <a href='/'>
+                        <span style={{color: "black"}}className="header-back-arrow">
+                            <i className="fas fa-arrow-left"></i>
+                        </span>
+                    </a>
 
                 </header>
 
@@ -65,8 +82,8 @@ export default function Profile(props) {
                         <img src={userProfileInGoogle.photoURL} alt="User profile image"></img>
                         <figcaption><a href="https://support.google.com/mail/answer/35529?co=GENIE.Platform%3DDesktop&hl=en&oco=0">Edit Picture</a></figcaption>
                     </figure>
-                    <h3>Name: {userProfileInGoogle.displayName}</h3>
-                    <h3>Email: {userProfileInGoogle.email}</h3>
+                    <h3><b>Name:</b> {userProfileInGoogle.displayName}</h3>
+                    <h3><b>Email:</b> {userProfileInGoogle.email}</h3>
                 </section>
 
                 <section className="achievements">
@@ -77,6 +94,7 @@ export default function Profile(props) {
                 </section>
 
                 <section className="statistics">
+                    {/* Gotten from multiplayer component */}
                     <h1>STATISTICS</h1>
                     <ul className="list">
                         {Object.keys(userProfileInDB.statistics).map((key, index) => {
@@ -88,10 +106,8 @@ export default function Profile(props) {
 
                 <section className="skills">
                     <h1>SKILLS</h1>
-                    {
-                        userProfileInDB.skills ? <div></div> : <div className="list">Oh no! You don't have any skills. Get some here!</div>
-                    }
-                    {/* Power ups */}
+                    {displaySkills()}
+                    {/* Skills */}
                 </section>
             </div>
             :

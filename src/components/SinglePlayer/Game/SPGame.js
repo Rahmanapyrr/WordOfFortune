@@ -20,14 +20,16 @@ import DisplayWord from './DisplayWord.js';
 import Characters from './Characters.js';
 import SPSummaryModal from './SPSummaryModal.js';
 
+// Single player settings
 import {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, INVALID_CHARACTERS, HINTS} from './SPSettings.js';
+import { SKILL_removeCharacter } from './Skills';
 
-// Styling
-import GoBackLogo from './assets/goBackIcon.png';
+/* Styling */
 import BisonLogo from '../../../components/Homepage/assets/bison_logo.png';
 import './SPGame.css';
-import {Grid, TextField} from '@material-ui/core';
 
+// Material UI
+import {Grid, TextField} from '@material-ui/core';
 
 // imported from NPM random words
 const randomWords = require('random-words');
@@ -42,11 +44,19 @@ export default function SPGame(props) {
 
     const [charactersChosen, setCharactersChosen] = useState([]); // list of character of chosen
 
-    const [userGuess, setUserGuess] = useState("");
+    const [userGuess, setUserGuess] = useState(""); // know the word? GUESS IT!
     const [currentHint, setCurrentHint] = useState(""); // current hint that should be displayed
     const [theme, setTheme] = useState("") // theme
+    const [roundWon, setRoundWon] = useState(false); // did the user win or lose the round? USED IN SUMMARY MODEL
 
     const [summaryModal, openSummaryModal] = useState(false); // summary modal
+
+    // e.g. for: 'A' was included!  
+    const [char, setChar] = useState(null); 
+    const [wasIncluded, setIncludedState] = useState(false); // was character included or excluded?
+
+    // skills
+    const [SKILL_removeCharacterActive, SKILL_setRemoveCharacterState] = useState(true) //
 
     // When component loads calls handleUserGuess
     useEffect(() => {
@@ -120,7 +130,6 @@ export default function SPGame(props) {
 
         // Check if this char is included in the word. (Handle upper/lowercase)
         if (currentWord.includes(char.toLowerCase()) || currentWord.includes(char.toUpperCase())) {
-            console.log("YES! This character is right.");
 
             // Update state of characters to display
             var modifyCharacterToDisplay = charactersToDisplay;
@@ -130,27 +139,37 @@ export default function SPGame(props) {
                     modifyCharacterToDisplay[i] = 1;
                 }
             }
+            // Set Character Included/Excluded State
+            setChar(char);
+            setIncludedState(true);
+
             // check if word spelled
             var wordSpelled = true;
-            for (var i = 0; i < modifyCharacterToDisplay.length; i++) {
+            for (i = 0; i < modifyCharacterToDisplay.length; i++) {
                 if (modifyCharacterToDisplay[i] === 0) {
                     wordSpelled = false;
                 }
             }
-            if (wordSpelled) openSummaryModal(true);
+            if (wordSpelled) {
+                setRoundWon(true); // user won the round
+                showAllCharacters(); // tell displayCharacters to show all characters
+                openSummaryModal(true);
+            }
 
             setCharactersToDisplay(modifyCharacterToDisplay);
             
 
         } else {
             // This char is NOT included in the word.
-            console.log("I'm sorry, this character is wrong"); 
+            // Set Character Included/Excluded State
+            setChar(char);
+            setIncludedState(false);
 
             // Decrease Lives.
 
             // Check if out of lives
             if (currentLives - 1 <= 0) {
-                console.log("Out of lives!");
+                showAllCharacters();
                 setCurrentLives(0);
                 // open summary modal
                 openSummaryModal(true);
@@ -167,13 +186,16 @@ export default function SPGame(props) {
         if (event.key === "Enter") {
             if (currentWord.join('').toUpperCase() === userGuess.toUpperCase()) {
                 // Guess was correct
-                console.log("GUESS WAS CORRECT!");
+
+                showAllCharacters();
+                setRoundWon(true);
                 openSummaryModal(true);
             } else {
                 // Guess was incorrect.
                 if (currentLives - 2 <= 0) {
-                    console.log("Out of lives!");
+                    showAllCharacters();
                     setCurrentLives(0);
+                    setRoundWon(false);
                     // open summary modal
                     openSummaryModal(true);
                 } else setCurrentLives(currentLives - 2);
@@ -183,38 +205,57 @@ export default function SPGame(props) {
         }       
     }
 
-    
+    // When the game is over simply show all characters.
+    const showAllCharacters = () => {
+        // Show all characters.
+        var modifyCharacterToDisplay = charactersToDisplay;
+        for (var i = 0; i < modifyCharacterToDisplay.length; i++) modifyCharacterToDisplay[i] = 1;
+        
+        setCharactersToDisplay(modifyCharacterToDisplay);
+    }
 
-    
+    // Handle if a user clicked a skill.
+    const handleRemoveCharacterSkill = (event) => {
+        event.target.style.opacity = 0.2;
+        event.target.style.cursor = "default";
+        if (SKILL_removeCharacterActive) {
+            setCharactersChosen(SKILL_removeCharacter(charactersChosen, currentWord));
+            SKILL_setRemoveCharacterState(false);
+        }
+    }
+
     console.log(currentWord);
-    console.log(charactersToDisplay);
-    
 
     return (
-        
         <div>
-            <header class="game">
+        
+            <header className="game">
                 <a href='/singleplayer'>
                     <span className="back-arrow">
-                        <i class="fas fa-arrow-left"></i>
+                        <i className="fas fa-arrow-left"></i>
                     </span>
                 </a>
                 <img src={BisonLogo} alt="Bison Logo"></img>
 
             </header>
             <div>
-                <h1>{"Theme: " + theme}</h1>
+                <h1 className="sp-game-header">{"Theme: " + theme + " | Difficulty: " + difficulty}</h1>
             </div>
+       
 
 
             <section>
                 {/* Hangman */}
                 <Grid container spacing={2}>
                     <Grid className="lives" item xs>
-                        <h3>{`Lives: `} {[...Array(currentLives)].map((e, i) => <i key={i} class="fas fa-heart heart"></i>)}</h3>
+                        <h3>{`Lives: `} {[...Array(currentLives)].map((e, i) => <i key={i} className="fas fa-heart heart"></i>)}</h3>
                     </Grid>
                     <Grid item xs>
                         <Characters className="characters" charactersChosen={charactersChosen} handleCharacterClick={handleCharacterClick}/>
+                        
+                        {(char) ? (wasIncluded) ? <div><h2 className="char-included">{char} was correct!</h2></div> : 
+                        <div><h2 className="char-excluded">{char} was incorrect!</h2></div> : <></>}
+                        
                     </Grid>
                     
                 </Grid>
@@ -225,15 +266,19 @@ export default function SPGame(props) {
                 <Grid container>
                     <Grid item xs>
                         <DisplayWord currentWord={currentWord} charactersToDisplay={charactersToDisplay}/>
-                        <TextField value={userGuess} onChange={(e) => setUserGuess(e.target.value)} onKeyUp={(e) => handleUserGuess(e)} color="primary" label="Guess word!" variant="filled"/>
+                        <TextField value={userGuess} onChange={(e) => setUserGuess(e.target.value)} onKeyUp={(e) => handleUserGuess(e)} color="primary" label="Guess word!" variant="filled" />
                     </Grid>
                     <Grid item xs>
-                        <h3>{"Hint: " + currentHint}</h3>
+                        <h3 className="hint">{"Hint: " + currentHint}</h3>
                     </Grid>
                 </Grid>
             </section>
 
-            {summaryModal ? <SPSummaryModal/> : <> </>}     
+            <section className="sp-game-skills">
+                <span onClick={handleRemoveCharacterSkill} style={{fontSize: "30px"}}><i className="fas fa-eraser"></i></span>
+            </section>
+
+            {summaryModal ? <SPSummaryModal correctWord={currentWord} roundWon={roundWon} currentLives={currentLives}/> : <> </>}     
         
         </div>
     )

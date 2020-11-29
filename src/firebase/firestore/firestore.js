@@ -44,15 +44,6 @@ async function addUserToDB(userData) {
 
     try {
         const setWithMerge = userDocumentRef.set({
-            rank: 0,
-            statistics: {
-                roundsWon: 0,
-                roundsLost: 0,
-                charactersGuessed: 0,
-                charactersWrong: 0,
-            },
-            achievements: [],
-            skills: [], // power ups or skills
             lastLoggedIn: new Date(),
         }, { merge: true });
         
