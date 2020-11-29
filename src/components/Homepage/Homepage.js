@@ -63,6 +63,8 @@ export default function Homepage() {
                 <header>
                     {(user) ? 
                         <div>
+                            <img src={user.photoURL} alt="description in case"></img>
+                            <h2>{user.displayName}</h2>
                             <img src={user.photoURL} alt="User profile"></img>
                             <a className="profile" href={`/profile/${user.uid}`}><h4>{user.displayName}</h4></a>
                             <Button onClick={logOutUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
