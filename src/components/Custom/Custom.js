@@ -169,19 +169,19 @@ export default function Custom() {
         }
 
         // medium
-        for( var i = 0; i < modEditChal.medium.length; i++) {
+        for(i = 0; i < modEditChal.medium.length; i++) {
             if ( modEditChal.medium[i] === word) modEditChal.medium.splice(i, 1); 
             
         }
 
         // hard
-        for( var i = 0; i < modEditChal.hard.length; i++) {
+        for(i = 0; i < modEditChal.hard.length; i++) {
             if ( modEditChal.hard[i] === word) modEditChal.hard.splice(i, 1); 
             
         }
         
         // hint
-        for( var i = 0; i < modEditChal.hints.length; i++) {
+        for(i = 0; i < modEditChal.hints.length; i++) {
             if ( modEditChal.hints[i] === word) modEditChal.hints.splice(i, 1); 
             
         }
@@ -285,8 +285,8 @@ export default function Custom() {
                             <div style={{marginBottom: "20px"}}>
                                 <span style={{fontSize: "20px"}}>
                                     {challenge.title}
-                                    <span style={{marginRight: "10px", marginLeft: "10px"}}><i id={challenge.id} onClick={(e) => handleEdit(e)} className="fas fa-edit"></i></span>
-                                    {(editing) ? <span onClick={(e) => handleDelete(e)}><i className="fas fa-trash-alt"></i></span> : <></>}
+                                    <span style={{marginRight: "10px", marginLeft: "10px", cursor: "pointer",}}><i id={challenge.id} onClick={(e) => handleEdit(e)} className="fas fa-edit"></i></span>
+                                    {(editing) ? <span style={{cursor: "pointer"}}onClick={(e) => handleDelete(e)}><i className="fas fa-trash-alt"></i></span> : <></>}
                                 </span>
                             </div>
                         </div>
@@ -350,7 +350,7 @@ export default function Custom() {
                     {editChallenge.hints.map((word, index) => {
                         return <span onDoubleClick={(e) => removeWord(e)} className="custom-edit-word" key={index}>{word}</span>
                     })}
-                    
+                    <TextField value={editHint} onChange={(e) => setEditHint(e.target.value)} onKeyUp={hintEnter} variant="filled"></TextField>
                 </div>
                 <Button onClick={saveToDB} variant="contained">Save</Button>
                 <Button onClick={() => setEditing(false)} variant="contained">Cancel</Button>

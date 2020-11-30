@@ -19,7 +19,10 @@ export default function SPSummaryModal(props) {
             {
                 props.roundWon ? <><h3>You had <span style={{color: "green"}}>{props.currentLives}</span> lives left!</h3></> : <></>
             }
-            <Button variant="contained" color="primary" href="/singleplayer">All done!</Button>
+            {
+                (props.isUserChallenge) ? <Button variant="contained" color="primary" href="/custom">All done!</Button>  : <Button variant="contained" color="primary" href="/singleplayer">All done!</Button>
+            }
+            
         </div>
     );
 
