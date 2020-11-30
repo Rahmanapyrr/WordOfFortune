@@ -103,7 +103,7 @@ export default function Custom() {
             // save to firebase
             const userDocumentRef = firestore.collection("users").doc(userID);
  
-            const setWithMerge = await userDocumentRef.set({
+            await userDocumentRef.set({
                 created_challenges: moduserChal,
             }, { merge: true });
             
@@ -193,7 +193,7 @@ export default function Custom() {
         if (addNewChallenge) {
             const userDocumentRef = firestore.collection("users").doc(userID);
 
-            const setWithMerge = await userDocumentRef.set({
+            await userDocumentRef.set({
                 created_challenges: [...userChallenges, editChallenge],
             }, { merge: true });
                 
@@ -217,7 +217,7 @@ export default function Custom() {
             
             const userDocumentRef = firestore.collection("users").doc(userID);
             try {
-                const setWithMerge = await userDocumentRef.set({
+                await userDocumentRef.set({
                     created_challenges: modUserChal,
                 }, { merge: true });
                 
@@ -294,7 +294,7 @@ export default function Custom() {
                 }) 
                 : 
                 (value === 0) ? 
-                    <div>
+                    <div style={{marginBottom: "25px"}}>
                         <h1>Play a challenge</h1>
                         <h4>Enter a challenge ID: </h4>
                         <div>
@@ -303,12 +303,13 @@ export default function Custom() {
                             id="difficulty-label"
                             value={difficulty}
                             onChange={(e) => setDifficulty(e.target.value)}
+                            style={{marginRight:"25px"}}
                             >
                             <MenuItem value={EASY_DIFFICULTY}>Easy</MenuItem>
                             <MenuItem value={MEDIUM_DIFFICULTY}>Medium</MenuItem>
                             <MenuItem value={HARD_DIFFICULTY}>Hard</MenuItem>
                             </Select>
-                            <TextField value={challengeIDToPlay} placeholder="Challenge ID" onChange={(e) => setChallengeIDToPlay(e.target.value)} onKeyUp={hintEnter} variant="filled"></TextField>
+                            <TextField style={{marginRight:"25px"}} value={challengeIDToPlay} placeholder="Challenge ID" onChange={(e) => setChallengeIDToPlay(e.target.value)} onKeyUp={hintEnter} variant="filled"></TextField>
                             <Button variant="contained"onClick={() => playChallenge(challengeIDToPlay)}>Play Challenge</Button>
                         </div>
                     </div>
@@ -318,7 +319,7 @@ export default function Custom() {
             }
 
             {/* Editing */}
-            { (editing) ?
+            { (editing && (value === 1)) ?
             <div style={{marginBottom: "25px"}}>
                 <h5>Editing Title: {<TextField value={challengeName} placeholder="Give a challenge name..."onChange={(e) => handleTitleEdit(e.target.value)} variant="filled"></TextField>} | ID: {editChallenge.id}</h5>
                 <div>    
