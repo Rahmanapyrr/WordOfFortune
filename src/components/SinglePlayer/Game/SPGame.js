@@ -261,15 +261,27 @@ export default function SPGame(props) {
     return (
         <div>
         
-            <header className="game">
-                <a href='/singleplayer'>
+                {(!userChallenge) ? 
+                <header className="game">
+                <a href='/singleplayer'> 
                     <span className="back-arrow">
                         <i className="fas fa-arrow-left"></i>
                     </span>
                 </a>
                 <img src={BisonLogo} alt="Bison Logo"></img>
+                </header>
+                :
+                <header className="game">
+                <a href='/custom'> 
+                    <span className="back-arrow">
+                        <i className="fas fa-arrow-left"></i>
+                    </span>
+                </a>
+                <img src={BisonLogo} alt="Bison Logo"></img>
+                </header>
+                }
 
-            </header>
+            
             <div>
                 <h1 className="sp-game-header">{"Theme: " + theme + " | Difficulty: " + difficulty}</h1>
             </div>
@@ -310,7 +322,7 @@ export default function SPGame(props) {
                 <span onClick={handleRemoveCharacterSkill} style={{fontSize: "30px"}}><i className="fas fa-eraser"></i></span>
             </section>
 
-            {summaryModal ? <SPSummaryModal correctWord={currentWord} roundWon={roundWon} currentLives={currentLives}/> : <> </>}     
+            {summaryModal ? <SPSummaryModal isUserChallenge={userChallenge} correctWord={currentWord} roundWon={roundWon} currentLives={currentLives}/> : <> </>}     
         
         </div>
     )

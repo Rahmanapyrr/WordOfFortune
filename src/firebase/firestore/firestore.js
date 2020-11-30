@@ -47,7 +47,7 @@ async function addUserToDB(userData) {
     if (user.exists) {
         // Simply update logged in value.
 
-        const setWithMerge = userDocumentRef.set({
+        userDocumentRef.set({
             lastLoggedIn: new Date(),
         }, { merge: true });
 
@@ -55,7 +55,7 @@ async function addUserToDB(userData) {
         // Create new account to store to firebase
 
         try {
-            const setWithMerge = userDocumentRef.set({
+            userDocumentRef.set({
                 lastLoggedIn: new Date(),
                 achievements: [],
                 skills: [], // array of objects
