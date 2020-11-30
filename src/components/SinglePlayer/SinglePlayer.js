@@ -29,6 +29,9 @@ export default function SinglePlayer() {
   // Selected challenge
   const [challengeSelected, challengeToSelect] = useState({id: "RANDOM", name: "Random Words"});
 
+  // number of words the user has gotton correct consecutively
+  const [consecutive_correct, setConsecutiveCorrect] = useState(0);
+
   // Get the challenges from Firestore and adds them to our state.
   useEffect(() => {
     // Add random option challenge. 
@@ -53,6 +56,17 @@ export default function SinglePlayer() {
   const handleDifficulty = (e) => {
     setDifficulty(e.target.value);
   }
+
+  const handleBuildSpaceship = () => {
+    setOpen(true);
+    if (consecutive_correct + 1 === 3) {
+      console.log("SPACESHIP GAME GOES HEREE!!!!")
+    } else {
+      setConsecutiveCorrect(consecutive_correct + 1);
+    }
+  }
+
+  console.log(consecutive_correct)
 
   // The body of the Modal
   const modalBody = (
@@ -96,7 +110,7 @@ export default function SinglePlayer() {
       <Modal open={open} onClose={handleClose} disableBackdropClick >
         {modalBody}
       </Modal>
-      { (!open) ? <SPGame difficulty={difficulty} challenge={challengeSelected}/> : <> </>}
+      { (!open) ? <SPGame difficulty={difficulty} challenge={challengeSelected} handleBuildSpaceship={handleBuildSpaceship} consecutive_correct={3 - consecutive_correct - 1}/> : <> </>}
       
 
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // Styling
 import { Modal, Button } from '@material-ui/core';
@@ -8,6 +8,7 @@ import Confetti from 'react-confetti'
 import './SPSummaryModal.css';
 
 export default function SPSummaryModal(props) {
+    const [open, setOpen] = useState(true);
     // The body of the Modal
     const modalBody = (
         <div className="summary-modal">
@@ -20,7 +21,10 @@ export default function SPSummaryModal(props) {
                 props.roundWon ? <><h3>You had <span style={{color: "green"}}>{props.currentLives}</span> lives left!</h3></> : <></>
             }
             {
-                (props.isUserChallenge) ? <Button variant="contained" color="primary" href="/custom">All done!</Button>  : <Button variant="contained" color="primary" href="/singleplayer">All done!</Button>
+                (props.isUserChallenge) ? <Button style={{marginRight: "25px"}}variant="contained" color="primary" href="/custom">All done!</Button>  : <Button style={{marginRight: "25px"}} variant="contained" color="primary" href="/singleplayer">All done!</Button>
+            }
+            {
+                (!props.roundWon) ? <></>  : <Button variant="contained" color="primary" onClick={() => props.handleBuildSpaceship()}>{(props.consecutive_correct === 0) ? <span>BUILD SPACESHIP!!!</span> : <span>Need {props.consecutive_correct} more words to build spaceship!</span>}</Button>
             }
             
         </div>
@@ -33,7 +37,7 @@ export default function SPSummaryModal(props) {
     return (
         <div>
             {(props.roundWon) ? <Confetti width={2000} height={1000} /> : <></> }
-            <Modal open={true} onClose={handleClose} disableBackdropClick >
+            <Modal open={open} onClose={handleClose} disableBackdropClick >
                 {modalBody}
             </Modal>
         </div>

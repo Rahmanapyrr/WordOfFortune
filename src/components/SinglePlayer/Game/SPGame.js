@@ -63,8 +63,7 @@ export default function SPGame(props) {
 
     // skills
     const [SKILL_removeCharacterActive, SKILL_setRemoveCharacterState] = useState(true) //
-    // number of words the user has gotton correct consecutively
-    var consecutive_correct = 0
+    
 
 
     // When component loads calls handleUserGuess
@@ -216,8 +215,6 @@ export default function SPGame(props) {
 
                 showAllCharacters();
                 setRoundWon(true);
-                console.log("GUESS WAS CORRECT!");
-                consecutive_correct = consecutive_correct + 1;
 
                 openSummaryModal(true);
             } else {
@@ -227,12 +224,9 @@ export default function SPGame(props) {
                     setCurrentLives(0);
                     setRoundWon(false);
 
-                    consecutive_correct = 0;
                     // open summary modal
                     openSummaryModal(true);
                 } else setCurrentLives(currentLives - 2);
-
-                console.log("Wrong guess..");
             }
         }       
     }
@@ -322,7 +316,7 @@ export default function SPGame(props) {
                 <span onClick={handleRemoveCharacterSkill} style={{fontSize: "30px"}}><i className="fas fa-eraser"></i></span>
             </section>
 
-            {summaryModal ? <SPSummaryModal isUserChallenge={userChallenge} correctWord={currentWord} roundWon={roundWon} currentLives={currentLives}/> : <> </>}     
+            {summaryModal ? <SPSummaryModal isUserChallenge={userChallenge} correctWord={currentWord} roundWon={roundWon} currentLives={currentLives} consecutive_correct={props.consecutive_correct}handleBuildSpaceship={props.handleBuildSpaceship}/> : <> </>}     
         
         </div>
     )
