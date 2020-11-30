@@ -26,7 +26,7 @@ import { useSpring, animated } from 'react-spring'
 // Material UI
 import { Button } from '@material-ui/core';
 
-export default function Homepage({ isTesting }) {
+export default function Homepage() {
     // State
     const [user, setUser] = useState(null); // user is represented as an object in firebase
 
