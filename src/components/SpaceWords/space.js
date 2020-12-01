@@ -11,6 +11,47 @@ function Starship(props) {
         return <div draggable="false" style={stats} className="ship"/>;
 }
 
+//function for initializing the small green square - the bonus
+function Bonus(props) {
+let stats = {
+    left: props.x,
+    top: props.y,
+    visibility: props.visibility,
+    letter_char: props.char,
+};
+return <div draggable="false" style={stats} className="bonus"><p>{stats.letter_char}</p></div>;
+}
+
+//function for initializing the small black square - the anti-bonus
+function Evil(props) {
+    let stats = {
+        left: props.x,
+        top: props.y,
+        visibility: props.visibility,
+    };
+    return <div draggable="false" style={stats} className="evil"/>
+}
+
+//function for initializing the small yellow rectangle - the laser beam
+function Beam(props) {
+    let stats = {
+        left: props.x,
+        top: props.y,
+        visibility: props.visibility,
+    };
+    return <div draggable="false" style={stats} className="beam"/>
+}
+
+//function for rendering the large red square - the asteroid
+function Asteroid(props) {
+    let stats = {
+        left: props.x,
+        top: props.y,
+        letter_char: "",
+    };
+return <div draggable="false" style={stats} className="asteroid"></div>;
+}
+
 //main class responsible for the whole <Game/> component
 class Game extends Component {
     
