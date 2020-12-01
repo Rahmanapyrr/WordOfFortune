@@ -12,12 +12,6 @@
 // Functionality: Primary responsibility is to play a singleplayer game of Hangman
 import React, { useState, useEffect } from 'react'
 
-import image0 from '../../../components/ShipImages/0.png';
-import image1 from '../../../components/ShipImages/1.png';
-import image2 from '../../../components/ShipImages/2.png';
-import image3 from '../../../components/ShipImages/3.png';
-import image4 from '../../../components/ShipImages/4.png';
-
 // Firestore
 import { queryDocumentDB } from '../../../firebase/firestore/firestore.js';
 

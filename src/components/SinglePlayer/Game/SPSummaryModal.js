@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 // Styling
 import { Modal, Button } from '@material-ui/core';
-import Confetti from 'react-confetti'
+import Confetti from 'react-confetti';
 
 
 import './SPSummaryModal.css';

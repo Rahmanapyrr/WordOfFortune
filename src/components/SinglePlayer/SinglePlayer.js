@@ -8,6 +8,12 @@ import React, { useState, useEffect } from 'react'
 import {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, HARD_DIFFICULTY} from './Game/SPSettings.js';
 import SPGame from './Game/SPGame';
 
+import image0 from './../ShipImages/0.png';
+import image1 from './../ShipImages/1.png';
+import image2 from './../ShipImages/2.png';
+import image3 from './../ShipImages/3.png';
+import image4 from './../ShipImages/4.png';
+
 /** Firestore */
 import { queryCollectionDB } from '../../firebase/firestore/firestore.js';
 
@@ -17,6 +23,7 @@ import { Modal, FormControl, Select, MenuItem, InputLabel, Button, TextField } f
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function SinglePlayer() {
+  const images = [image0,image1,image2,image3,image4];
   // Default state of modal will be OPEN!
   const [open, setOpen] = useState(true);
 
@@ -111,7 +118,10 @@ export default function SinglePlayer() {
         {modalBody}
       </Modal>
       { (!open) ? <SPGame difficulty={difficulty} challenge={challengeSelected} handleBuildSpaceship={handleBuildSpaceship} consecutive_correct={3 - consecutive_correct - 1}/> : <> </>}
-      
+
+        <div>
+        <img src={images[consecutive_correct]} alt="Spaceship"></img>
+        </div>
 
 
     </div>
