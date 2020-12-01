@@ -82,7 +82,7 @@ class Game extends Component {
         char: "",
     }
 
-    intervalId: 0;
+    intervalId = 0;
 
     //constructor method with all used properties set into the state
     constructor() {
