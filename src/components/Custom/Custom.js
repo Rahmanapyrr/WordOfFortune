@@ -265,8 +265,6 @@ export default function Custom() {
         });
     }
 
-    console.log(challengeToPlay);
-
     return (
         <div>
             {/* Header */}
