@@ -77,7 +77,7 @@ export default function Custom() {
         const id = e.target.id;
         for (var i = 0; i < userChallenges.length; i++) {
             if (userChallenges[i].id === id) {
-                setEditing(true);
+                setEditing(!editing);
                 setChallengeName(userChallenges[i].title)
                 setEditChallenge(userChallenges[i]);
                 break;
@@ -236,6 +236,18 @@ export default function Custom() {
         setChallengeName(value);
         setEditChallenge({...editChallenge, title: value});
     }
+
+    const handlePlay = (e) => {
+        const titleClicked = e.target.parentElement.parentElement.textContent;
+        for (var i = 0; i < userChallenges.length; i++) {
+            if (userChallenges[i].title === titleClicked) {
+                setChallengeToPlay(userChallenges[i]);
+                setPlay(true);
+                setValue(-1);
+                return;
+            }
+        }
+    }
     
     const playChallenge = async() => {
         if (challengeIDToPlay === "") return;
@@ -286,6 +298,7 @@ export default function Custom() {
                                 <span style={{fontSize: "20px"}}>
                                     {challenge.title}
                                     <span style={{marginRight: "10px", marginLeft: "10px", cursor: "pointer",}}><i id={challenge.id} onClick={(e) => handleEdit(e)} className="fas fa-edit"></i></span>
+                                    {(value === 1 && !(editing)) ? <span style={{cursor: "pointer"}} onClick={(e) => handlePlay(e)}><i className="fas fa-play-circle"></i></span> : <></>}
                                     {(editing) ? <span style={{cursor: "pointer"}}onClick={(e) => handleDelete(e)}><i className="fas fa-trash-alt"></i></span> : <></>}
                                 </span>
                             </div>
@@ -358,6 +371,23 @@ export default function Custom() {
             </div> 
             : 
             <></> }
+
+            {
+                (!editing && value===1) ? <div>
+                <Select
+                    labelId="difficulty"
+                    id="difficulty-label"
+                    value={difficulty}
+                    onChange={(e) => setDifficulty(e.target.value)}
+                    style={{display: "inline-flex",marginRight:"25px"}}
+                    variant="filled"
+                    >
+                    <MenuItem value={EASY_DIFFICULTY}>Easy</MenuItem>
+                    <MenuItem value={MEDIUM_DIFFICULTY}>Medium</MenuItem>
+                    <MenuItem value={HARD_DIFFICULTY}>Hard</MenuItem>
+                    </Select>
+                </div> : <></>
+            }
 
             {
                 (play) ?
