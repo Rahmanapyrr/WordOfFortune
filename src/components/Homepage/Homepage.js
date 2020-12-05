@@ -21,33 +21,34 @@ import BisonLogo from './assets/bison_logo.png';
 import GitHubLogo from './assets/github_logo.png';
 
 // React-Spring for animation
-import {useSpring, animated} from 'react-spring'
+import { useSpring, animated } from 'react-spring'
 
 // Material UI
-import {Button} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 export default function Homepage() {
     // State
     const [user, setUser] = useState(null); // user is represented as an object in firebase
 
     // Animations
-    const fadeIn = useSpring({opacity: 1, from: {opacity: 0}, Duration: 1000});
-    const fromAbove = useSpring({marginTop: 0, from: {marginTop: -1000}, Duration: 700});
+    const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 }, Duration: 1000 });
+    const fromAbove = useSpring({ marginTop: 0, from: { marginTop: -1000 }, Duration: 700 });
+
+
 
     // Log user in
-    const logInUser = async() => {
+    const logInUser = async () => {
         await logIn();
     }
 
     // Log user out
-    const logOutUser = async() => {
+    const logOutUser = async () => {
         logOut();
         setUser(null);
     }
-
     // Sets an observer on the Auth object to watch and update state 
     // whenever the user is signed in or signed out.
-    auth.onAuthStateChanged(function(user) {
+    auth.onAuthStateChanged(function (user) {
         if (user) {
             // User signed in.
             addUserToDB(user);
@@ -62,36 +63,36 @@ export default function Homepage() {
         <div>
             <animated.div style={fadeIn}>
                 <header>
-                    {(user) ? 
+                    {(user) ?
                         <div>
                             <img src={user.photoURL} alt="User profile"></img>
                             <a className="profile" href={`/profile/${user.uid}`}><h4>{user.displayName}</h4></a>
-                            <Button onClick={logOutUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
-                                    Log Out
+                            <Button onClick={logOutUser} style={{ color: "#5647FD" }} variant="outlined" color="primary">
+                                Log Out
                             </Button>
                         </div>
                         :
                         <div>
-                            <Button onClick={logInUser} style={{color: "#5647FD"}} variant="outlined" color="primary">
+                            <Button onClick={logInUser} style={{ color: "#5647FD" }} variant="outlined" color="primary">
                                 Log In
                             </Button>
                         </div>
                     }
                 </header>
             </animated.div>
-            
+
             <animated.div style={fromAbove}>
                 <main>
-                    <img alt="Howard University Logo" src={BisonLogo} />
-                    <h1>Bison Hangman</h1>
+                    <img id="title-image" alt="Howard University Logo" src={BisonLogo} />
+                    <h1 id="title-text">Bison Hangman</h1>
                 </main>
             </animated.div>
 
             <nav>
-                <Button component={Link} to={"/singleplayer"} className="singleplayer"  variant="contained" color="primary">Singleplayer</Button>
+                <Button component={Link} to={"/singleplayer"} className="singleplayer" variant="contained" color="primary">Singleplayer</Button>
                 <Button className="multiplayer" variant="contained" color="primary">Multiplayer</Button>
                 {(user) ? <Button component={Link} to={"/custom"} className="custom" variant="contained" color="primary">Custom</Button> : <></>}
-                <Button className="options"  variant="contained" color="primary">Options</Button>
+                <Button className="options" variant="contained" color="primary">Options</Button>
 
             </nav>
 
