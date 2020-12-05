@@ -4,6 +4,7 @@
 // Functionality: Primary responsibility is to set options for the singleplayer game.
 
 import React, { useState, useEffect } from 'react'
+import Game from './../SpaceWords/space';
 
 import {EASY_DIFFICULTY, MEDIUM_DIFFICULTY, HARD_DIFFICULTY} from './Game/SPSettings.js';
 import SPGame from './Game/SPGame';
@@ -67,6 +68,7 @@ export default function SinglePlayer() {
   const handleBuildSpaceship = () => {
     setOpen(true);
     if (consecutive_correct + 1 === 3) {
+      window.location = '/space';
       console.log("SPACESHIP GAME GOES HEREE!!!!")
     } else {
       setConsecutiveCorrect(consecutive_correct + 1);

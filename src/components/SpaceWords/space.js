@@ -2,7 +2,19 @@
 import React, { Component } from 'react';
 import './space.css';
 
-//function for initializing blue square - the starship
+
+//function to display the word as much as the user guessed so far
+function displayWord(word, guessed, word_progress){
+    var guess = guessed.toLowerCase();
+    for (var i = 0; i < word.length; i++) {
+        if (word.charAt(i) === guess){
+            word_progress[i] = guess;
+        }
+    }
+    return word_progress;
+}
+
+//function for initializing blue square - the spaceship
 function Starship(props) {
         let stats = {
             left: props.x,
@@ -83,6 +95,7 @@ class Game extends Component {
     }
 
     intervalId = 0;
+    words = ["yelp","facebook","google","reddit"];
 
     //constructor method with all used properties set into the state
     constructor() {
@@ -110,20 +123,31 @@ class Game extends Component {
             evil_x: 310,
             evil_y: 0,
             evil_visibility: 'hidden',
+            curr_index: 0,
+            curr_word: "",
+            word: [],
+            word_display: "",
             bonusChar: "",
         };
+
     }
 
     //starting the interval timer when the component mounts
     componentDidMount() {
         this.intervalId = setInterval(this.checkStatus.bind(this), 10);
+        var word_str =  new Array(this.words[this.state.curr_index].split("").length + 1).join("_");
+        this.setState({
+            curr_word: this.words[this.state.curr_index],
+            word: this.words[this.state.curr_index].split(""),
+            word_display: word_str.split(""),
+        })
     }
 
     //stoping the interval timer when the component dismounts
     componentWillUnmount(){
         clearInterval(this.intervalId);
     }
-
+    
     //method for handling the mouseMove event - moving the starship
     handleMove(e) {
         if (!this.state.game_over) {
@@ -173,7 +197,7 @@ class Game extends Component {
         
     }
 
-    //method called by the interval timer - checking events like collisions, moving the other objects etc.
+    // method called by the interval timer - checking events like collisions, moving the other objects etc.
     checkStatus() {
         //checks the cooling of the weapon
         if (this.state.cooling > 0) {
@@ -197,7 +221,7 @@ class Game extends Component {
         }
 
         //responsible for moving the asteroid back to the top if it is out of the game area, otherwise animating it
-        if (this.state.asteroid_y >= (430)) {
+        if (this.state.asteroid_y >= (500)) {
             this.setState ({
                 asteroid_x: Math.floor(Math.random()*6)*50,
                 asteroid_y: 0,
@@ -240,23 +264,24 @@ class Game extends Component {
 
         //Adds small chance that the bonus will appear
         if (this.state.bonus_visibility==='hidden') {
-            if (Math.floor(Math.random() * 50) < 1) {
+            // if (Math.floor(Math.random() * 50) < 1) {
                 // getting random letter from alphabet
-                let alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                let randChar = alpha[Math.floor(Math.random() * 26)];
+            let alpha = "YELPABFCOY";
+            let randChar = alpha[Math.floor(Math.random() * 6)];
 
-                this.setState({
-                    bonusChar: randChar,
-                    bonus_x: (Math.floor(Math.random() * 30) * 10),
-                    bonus_y: 0,
-                    bonus_visibility: 'visible',
-                })
-            }
+            this.setState({
+                bonusChar: randChar,
+                bonus_x: (Math.floor(Math.random() * 30) * 10),
+                bonus_y: 0,
+                bonus_visibility: 'visible',
+            })
+            
         }
 
         //Responsible for hiding the bonus if it is out of the game area, otherwise animating it
         if (this.state.bonus_visibility==='visible') {
-            if (this.state.bonus_y >= (450)) {
+            var word = this.curr_word;
+            if (this.state.bonus_y >= (600)) {
 
                 this.setState ({
                     bonus_x: 310,
@@ -274,12 +299,23 @@ class Game extends Component {
         //Checks the collision of the ship and the bonus
         if (this.state.ship_x < (this.state.bonus_x + 10) && (this.state.ship_x + 30) > this.state.bonus_x &&
             this.state.ship_y < (this.state.bonus_y + 10) && (this.state.ship_y + 30) > this.state.bonus_y) {
+            var updatedWord = displayWord(this.state.curr_word, this.state.bonusChar, this.state.word_display);
             this.setState({
                 score: this.state.score + 100,
                 bonus_x: 310,
                 bonus_y: 0,
                 bonus_visibility: 'hidden',
+                word_display: updatedWord,
             })
+
+            console.log(this.state.word_display);
+
+            // if (!(this.state.word_display.includes("_"))){
+            //     this.setState ({
+            //         curr_index: this.state.curr_index + 1,
+            //         curr_word: this.words[this.state.curr_index + 1],
+            //     })   
+            // }
         }
 
         //Adds small chance that the anti-bonus will appear
@@ -343,9 +379,9 @@ class Game extends Component {
                     <Evil x={this.state.evil_x} y={this.state.evil_y} visibility={this.state.evil_visibility}/>
                     <Beam x={this.state.beam_x} y={this.state.beam_y} visibility={this.state.beam_visibility}/>
                     <Starship x={this.state.ship_x} y={this.state.ship_y}/>
-
-                    <div style={{fontSize: 30}}>
-                        <p>_ _ _ _ _ _</p>
+                    
+                    <div style={{fontSize: 25}}>
+                        <p>{this.state.word_display}</p>
                     </div>
                 </div>;
     }
