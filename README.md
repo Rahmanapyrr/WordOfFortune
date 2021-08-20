@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## To Run:
+Naviagte to: https://word-of-fortune.web.app/
+
 ## Available Scripts
 
 In the project directory, you can run:
