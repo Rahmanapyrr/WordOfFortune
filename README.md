@@ -1,4 +1,5 @@
 # Welcome to Word of Fortune, a fabulous Hangman Game!
+Word of Fortune is a Hangman Game made with React and Bootstrap. It also uses Firebase for CRUD.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
